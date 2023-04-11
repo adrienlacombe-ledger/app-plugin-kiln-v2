@@ -47,6 +47,14 @@ void handle_init_contract(void *parameters) {
             context->next_param = WITHDRAW_VALIDATION_OFFSET;
             break;
 
+        case KILN_BATCH_WITHDRAW:
+        case KILN_BATCH_WITHDRAW_EL:
+        case KILN_BATCH_WITHDRAW_CL:
+            break;
+
+        case KILN_REQUEST_EXIT:
+            break;
+
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

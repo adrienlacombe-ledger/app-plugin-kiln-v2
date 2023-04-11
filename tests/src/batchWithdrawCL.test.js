@@ -20,16 +20,15 @@ const abi = require(abi_path);
 
 nano_models.forEach(function (model) {
   test(
-    '[Nano ' + model.letter + '] Withdraw',
+    '[Nano ' + model.letter + '] BatchWithdrawCL',
     zemu(model, async (sim, eth) => {
       const contract = new ethers.Contract(contractAddr, abi);
 
-      const validatorAddress =
-        '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-      const deadline = Number(1632843280);
+      const pubkeys =
+        '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
 
-      const { data } = await contract.populateTransaction.withdraw(
-        validatorAddress
+      const { data } = await contract.populateTransaction.batchWithdrawCLFee(
+        pubkeys
       );
 
       let unsignedTx = genericTx;
@@ -41,7 +40,6 @@ nano_models.forEach(function (model) {
       const serializedTx = ethers.utils
         .serializeTransaction(unsignedTx)
         .slice(2);
-      console.log(eth.loadConfig);
       const resolution = await ledgerService.resolveTransaction(
         serializedTx,
         eth.loadConfig,
@@ -49,16 +47,16 @@ nano_models.forEach(function (model) {
           externalPlugins: true,
         }
       );
-      console.log(resolution);
       const tx = eth.signTransaction("44'/60'/0'/0", serializedTx, resolution);
       const right_clicks = 4;
 
       await waitForAppScreen(sim);
 
-      await sim.navigateAndCompareSnapshots('.', model.name + '_withdraw', [
-        right_clicks,
-        0,
-      ]);
+      await sim.navigateAndCompareSnapshots(
+        '.',
+        model.name + '_batchWithdrawCL',
+        [right_clicks, 0]
+      );
 
       await tx;
     }),

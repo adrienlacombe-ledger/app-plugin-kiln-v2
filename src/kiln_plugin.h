@@ -14,9 +14,13 @@
 // 1. withdraw(validator_pubkey)
 // 2. withdrawEL(validator_pubkey)
 // 3. withdrawCL(validator_pubkey)
+// 4. batchWithdraw(validator_pubkeys)
+// 5. batchWithdrawEL(validator_pubkeys)
+// 6. batchWithdrawCL(validator_pubkeys)
+// 7. requestValidatorsExit(validator_pubkeys)
 //
-// More to come!
-#define NUM_SELECTORS 4
+//
+#define NUM_SELECTORS 8
 
 // Selectors available (see mapping above).
 typedef enum {
@@ -24,6 +28,10 @@ typedef enum {
     KILN_WITHDRAW,
     KILN_WITHDRAW_EL,
     KILN_WITHDRAW_CL,
+    KILN_BATCH_WITHDRAW,
+    KILN_BATCH_WITHDRAW_EL,
+    KILN_BATCH_WITHDRAW_CL,
+    KILN_REQUEST_EXIT,
 } selector_t;
 
 // Parameters for deposit selector.

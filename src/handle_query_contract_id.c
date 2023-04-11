@@ -19,6 +19,16 @@ void handle_query_contract_id(void *parameters) {
             strlcpy(msg->version, "Withdraw", msg->versionLength);
             break;
 
+        case KILN_BATCH_WITHDRAW:
+        case KILN_BATCH_WITHDRAW_EL:
+        case KILN_BATCH_WITHDRAW_CL:
+            strlcpy(msg->version, "Batch Withdraw", msg->versionLength);
+            break;
+
+        case KILN_REQUEST_EXIT:
+            strlcpy(msg->version, "Request Exit", msg->versionLength);
+            break;
+
         default:
             PRINTF("Selector Index not supported: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

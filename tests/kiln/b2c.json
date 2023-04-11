@@ -23,6 +23,22 @@
             "0xbf509bd4": {
                 "method": "withdrawELFee",
                 "plugin": "kiln"
+            },
+            "0xe8a0c121": {
+                "method": "batchWithdraw",
+                "plugin": "kiln"
+            },
+            "0xef5e4682": {
+                "method": "batchWithdrawELFee",
+                "plugin": "kiln"
+            },
+            "0x0ffab6c2": {
+                "method": "batchWithdrawCLFee",
+                "plugin": "kiln"
+            },
+            "0xb6b06dec": {
+                "method": "requestValidatorsExit",
+                "plugin": "kiln"
             }
         }
     }],
